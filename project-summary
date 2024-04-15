@@ -5,4 +5,4 @@
 
 // created Navbar,Footer using tailwind blocks,navbar is made responsive ,used react-icons to get cart icon 
 
-// // made navbar as shadow effect and made footer,navbar commom in all components by _app.js
+// // made navbar as shadow effect and made footer,navbar commom in all components by _app.js and designed tshirts page by randomly inserting images in img url,template is copied from tailblocks
