@@ -1,1 +1,8 @@
-to create file :npx create-next-app@latest
+// to create file :npx create-next-app@latest
+// designed logos and required images using adobe express and using Head tag from next setup of favicon and title done
+// created pages:products/[slug].js(dynamic routes),about.js,checkout.js,contact.js,hoodies.js,login.js,signup.js,mugs.js,order.js,tshirts.js
+// created navbar and footer,along with using tailblocks for tailwind snippets
+
+// created Navbar,Footer using tailwind blocks,navbar is made responsive ,used react-icons to get cart icon 
+
+// // made navbar as shadow effect and made footer,navbar commom in all components by _app.js
