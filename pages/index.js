@@ -15,7 +15,7 @@ export default function Home() {
       </Head>
      
       <div className="">
-        <Image src={"/trail-3.png"} height={405} width={1519} className="w-[100vw] h-[80vh]" />
+        <Image src={"/trail-3.png"} height={405} width={1519} className="w-[100vw] h-[80vh]" alt="" />
         <div className="">
           <section className="text-gray-600 body-font px-9">
             <div className="container px-5 py-24 mx-auto">
