@@ -44,7 +44,7 @@ const Navbar = () => {
             <FaCartShopping />
           </button>
 
-          <div ref={ref} className="sideCart w-80 h-full absolute top-0 right-0 bg-pink-200 px-6 py-6 transform translate-x-full transition-transform duration-500 ease-in-out">
+          <div ref={ref} className="z-[10000] sideCart w-80 h-full absolute top-0 right-0 bg-pink-200 px-6 py-6 transform translate-x-full transition-transform duration-500 ease-in-out">
            <h1 className='font-bold text-xl text-center capitalize'>This is shopping cart</h1> 
             <span onClick={toggleCart} className='absolute top-5 right-2 cursor-pointer text-2xl text-pink-500'><IoIosCloseCircle className='' /></span>
             <ol className='mt-6'>
@@ -66,8 +66,10 @@ const Navbar = () => {
                 <div className='w-1/3 font-bold flex justify-center items-center gap-x-1 text-lg '> <CiCircleMinus/>  1 <CiCirclePlus/> </div>
                 </div>
               </li>
-              <button class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg"><IoBagCheckSharp className='text-xl' /> Checkout</button>
-              
+              <div className="flex">
+              <button class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg"><IoBagCheckSharp className='text-xl' /> Checkout</button>
+              <button class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg">Clear Cart</button>
+              </div>
             </ol>
           </div>
         </div>
