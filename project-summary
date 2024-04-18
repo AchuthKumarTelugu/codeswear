@@ -12,3 +12,8 @@
 //by ref and toggleCart for sideBar,by clicking it using ref we check whether it has className :translate-x-full using ref.current.classList.contains("translate-x-full"),if it has we remove it and add translate-x-0 using .classList.add('className') and .classList.remove('translate-x-full') and vice versa it does has ,completed side bar ,which of height full a
 
 //made product page with component from tailblocks and kept some dummy image
+
+//added pincode serviceability check
+
+//made cart state in _app.js,it is nearer to every component,and also as we know components in _app.js will appear on all components,we can supply cart components to all components from here
+//made cart state,made function for adding items,saving them on localstorage,deleting them ,clearing them from localStorage
