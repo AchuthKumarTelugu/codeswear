@@ -10,5 +10,5 @@ const OrderSchema = new Schema({
     amount: { type: Number, required: true },
     status: { type: String, default: "pending", required: true }
 }, { timestamps: true })
-
-export default mongoose.modelNames("orders", OrderSchema)
+mongoose.models={}
+export default mongoose.model("orders", OrderSchema)

@@ -26,3 +26,13 @@
 
 //setting up mongodb,installed mongoose npm i mongoose and setuped of modals which contains orders,products,users,to create modal new mongoose.Schema{{},timestamps:true}
 //timestamps:true tells us created at ,updated at properties,modals are used to create data on mongodb
+
+//creating middlewear to access db,which takes handler and returns it,first we check whether connection is there or not,then we connect to database and return handler
+// middlewear const connectDb = handler => async (req,res) =>{
+    //code
+    // retuern handler(req,res)
+// }
+// mongoose.models={} in modals ,so that there wont be any error
+//in api we export middleware which takes handler and returns it again after connection mongodb
+// making apis for getProducts which returns products and add products which takes array of products and add them one by one in database
+//made apis for updating ,adding,getting products

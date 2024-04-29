@@ -7,5 +7,5 @@ const userSchema = new Schema({
     password: { type: String, required: true },
    
 }, { timestamps: true })//gives us created at and updated at property
-
-export default mongoose.modelNames("users", userSchema)
+mongoose.models={}
+export default mongoose.model("users", userSchema)

@@ -11,5 +11,5 @@ const productSchema = new Schema({
     price: { type: Number, required: true },
     availableQty: { type: Number, required: true },
 }, { timestamps: true })//gives us created at and updated at property
-
-export default mongoose.modelNames("products", productSchema)
+mongoose.models={}
+export default mongoose.model("products", productSchema)
