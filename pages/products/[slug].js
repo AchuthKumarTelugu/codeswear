@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 
-const Slug = () => {
+const Slug = ({ addToCart ,removeFromCart ,clearCart ,subTotal ,cart}) => {
   const [pinStatus,setPinStatus]=useState(null);
   let pinRef=useRef()
   useEffect(()=>{
@@ -191,7 +191,7 @@ const Slug = () => {
           <button className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
            Buy Now!
           </button>
-          <button className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+          <button onClick={()=>addToCart(slug,499,1,"XL","wear the code")} className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
            Add to Cart
           </button>
           <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">

@@ -16,4 +16,6 @@
 //added pincode serviceability check
 
 //made cart state in _app.js,it is nearer to every component,and also as we know components in _app.js will appear on all components,we can supply cart components to all components from here
-//made cart state,made function for adding items,saving them on localstorage,deleting them ,clearing them from localStorage
+//made cart state,made function for adding items,saving them on localstorage,deleting them ,clearing them from localStorage,using useEffect upon loading fetching data from localStorage,sent data to all components via _app.js
+//from props received to navbar,i displayed that data in sidebar,added functionality to it addToCart,removeFromCart,clearCart
+//created checkout page,where we redirect when clicked on checkout on sidebar,in checkout page we take user order details like address etc and cart detail like from sidecart and use compoenets from tailwind
