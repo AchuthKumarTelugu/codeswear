@@ -5,6 +5,7 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { FaCartShopping } from "react-icons/fa6";
 import { IoBagCheckSharp } from "react-icons/io5";
+import { MdAccountCircle } from "react-icons/md";
 const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
   const ref = useRef()
   const toggleCart = () => {
@@ -36,7 +37,7 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
   return (
     <div>
       <div className="flex justify-between items-center px-10  gap-4 md:gap-4 py-3 md:py-2 bg-slate-100 shadow-lg mb-3  md:justify-between md:flex-row ">
-        <div className='flex gap-3 items-center flex-col md:flex-row'>
+        <div className='flex gap-3 items-center flex-col md:flex-row '>
           <div className="logo">
             <Link href={'/'}>
               <Image src={'/title.png'} width={200} height={50} alt='' />
@@ -52,8 +53,9 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
           </div>
         </div>
         <div className="cart">
-          <button onClick={toggleCart} className=' px-6 py-3 font-bold text-3xl rounded hover:text-[#FF87A5]'>
-            <FaCartShopping />
+          <button  className=' px-6 py-3 font-bold text-3xl rounded  relative flex gap-6 flex-col md:flex-row'>
+           <Link href={'/login'}> <MdAccountCircle  className='hover:text-[#FF87A5]'/></Link>
+            <FaCartShopping onClick={toggleCart} className='hover:text-[#FF87A5]' />
           </button>
 
           <div ref={ref} className="z-[999] sideCart w-80 h-full absolute top-0 right-0 bg-pink-200 px-6 py-6  
@@ -71,7 +73,7 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
               </li>)}
               {Object.keys(cart).length > 0 ? <div className='text-lg text-pink-500 font-semibold ml-5 mt-7'>SubTotal : ₹{subTotal}</div> : null}
               <div className="flex">
-                <Link href={"/checkout"}> <button   class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg "><IoBagCheckSharp className='text-xl' /> Checkout</button></Link>
+                <Link href={"/checkout"}> <button class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg "><IoBagCheckSharp className='text-xl' /> Checkout</button></Link>
                 <button onClick={clearCart} class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg">Clear Cart</button>
               </div>
             </ol>

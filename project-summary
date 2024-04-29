@@ -21,3 +21,8 @@
 //created checkout page,where we redirect when clicked on checkout on sidebar,in checkout page we take user order details like address etc and cart detail like from sidecart and use compoenets from tailwind
 
 //made order page with tailblock component
+
+//made logn and signup,forgot your password page
+
+//setting up mongodb,installed mongoose npm i mongoose and setuped of modals which contains orders,products,users,to create modal new mongoose.Schema{{},timestamps:true}
+//timestamps:true tells us created at ,updated at properties,modals are used to create data on mongodb
