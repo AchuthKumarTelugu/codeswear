@@ -8,12 +8,12 @@ const inter = Inter({ subsets: ["latin"] });
 export default function Home() {
   return (
     <main>
-      <Head>
+      {/* <Head>
         <title>Codeswear</title>
         <link rel="shortcut icon" href="/logo-2.png" />
         <meta name="description" content="CodesWear.com - Wear the code" />
       </Head>
-     
+      */}
       <div className="">
         <Image src={"/trail-3.png"} height={405} width={1519} className="w-[100vw] h-[80vh]" alt="" />
         <div className="">

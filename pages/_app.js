@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 export default function App({ Component, pageProps }) {
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
@@ -71,6 +72,11 @@ export default function App({ Component, pageProps }) {
   }
 
   return <>
+  <Head>
+    <title>Codeswear.com</title>
+    <link rel="shortcut icon" href="/logo-2.png" />
+    <meta name="description" content="CodesWear.com - Wear the code" />
+  </Head>
     <Navbar  addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart}/>
     <Component {...pageProps}  addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart}/>;
     <Footer />
