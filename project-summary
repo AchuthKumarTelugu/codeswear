@@ -36,3 +36,6 @@
 //in api we export middleware which takes handler and returns it again after connection mongodb
 // making apis for getProducts which returns products and add products which takes array of products and add them one by one in database
 //made apis for updating ,adding,getting products
+
+//displaying tshirts from database,using serverSideProps() on tshirts,writing backend logic there it self,
+//we will encounter an error in serialisability ,solution:JSON.parse(JSON.stringify(products))

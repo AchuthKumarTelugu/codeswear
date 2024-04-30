@@ -73,8 +73,8 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
               </li>)}
               {Object.keys(cart).length > 0 ? <div className='text-lg text-pink-500 font-semibold ml-5 mt-7'>SubTotal : ₹{subTotal}</div> : null}
               <div className="flex">
-                <Link href={"/checkout"}> <button class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg "><IoBagCheckSharp className='text-xl' /> Checkout</button></Link>
-                <button onClick={clearCart} class="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg">Clear Cart</button>
+                <Link href={"/checkout"}> <button className="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg "><IoBagCheckSharp className='text-xl' /> Checkout</button></Link>
+                <button onClick={clearCart} className="flex  justify-center items-center gap-2 mx-auto mt-8 text-white bg-pink-500 border-0 py-2 px-2 focus:outline-none hover:bg-pink-600 rounded text-lg">Clear Cart</button>
               </div>
             </ol>
           </div>

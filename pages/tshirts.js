@@ -1,7 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-
-const Tshirts = () => {
+import mongoose from "mongoose";
+import Product from '@/modals/Product';
+const Tshirts = (props) => {
+  let {products} = props;
+  // console.log('products',products);
   return (
     <div>
       <section className="text-gray-600 body-font ">
@@ -199,5 +202,14 @@ const Tshirts = () => {
     </div>
   );
 }
-
+export async function getServerSideProps(context) {
+  if(!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI) 
+  }
+ let products=await Product.find({})
+products=JSON.parse(JSON.stringify(products))  // to make json serilaisable
+  return {
+      props:{products}
+  }
+}
 export default Tshirts;
