@@ -38,4 +38,4 @@
 //made apis for updating ,adding,getting products
 
 //displaying tshirts from database,using serverSideProps() on tshirts,writing backend logic there it self,
-//we will encounter an error in serialisability ,solution:JSON.parse(JSON.stringify(products))
+//we will encounter an error in serialisability ,solution:JSON.parse(JSON.stringify(products))and retrieving data from database and displaying them on pagess
