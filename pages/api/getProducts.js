@@ -17,8 +17,8 @@ const handler  = async (req,res) => {
     }else {
       tshirts[item.title]=JSON.parse(JSON.stringify(item))
       if(item.availableQty > 0) { //if available qty is more than 0 ,then we make size and color properties as arrays
-          tshirts[item.title].color=[item.color]
-          tshirts[item.title].size=[item.size]
+          tshirts[item.title].color=item.color.split(' ')
+          tshirts[item.title].size=item.size.split(' ')
       }
     }
   }

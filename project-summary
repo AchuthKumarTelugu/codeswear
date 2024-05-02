@@ -39,3 +39,6 @@
 
 //displaying tshirts from database,using serverSideProps() on tshirts,writing backend logic there it self,
 //we will encounter an error in serialisability ,solution:JSON.parse(JSON.stringify(products))and retrieving data from database and displaying them on pagess
+
+//tshirts variant:converting data into json format such a way we can know which size,color for given product is available,with key as product_name,value as whole object,depending on its data we are populating tshirts page and its product page
+//now we create object where along with products,we have to know each color size availability
