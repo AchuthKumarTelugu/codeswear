@@ -3,8 +3,13 @@ import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import Product from '@/modals/Product';
 
-const Slug = ({ addToCart, removeFromCart, clearCart, subTotal, cart, product }) => {
-  console.log("product", product, product.size)
+const Slug = ({ addToCart, product,variant }) => {
+  console.log("product", product)
+  console.log("variant", variant)
+  const [activeColor, setActiveColor] = useState(product.color.split(' ')[0]);
+  Object.keys(variant).map((item)=>{
+    console.log('key',item)
+  })
 
   const [pinStatus, setPinStatus] = useState(null);
   let pinRef = useRef()
@@ -155,7 +160,7 @@ const Slug = ({ addToCart, removeFromCart, clearCart, subTotal, cart, product })
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
-                  {product.color.map((item, index) => <button key={index} style={{ backgroundColor: `${item}` }} className={`border-2 border-gray-300 mx-1  rounded-full w-6 h-6 focus:outline-none`} />)}
+                  {Object.keys(variant).map((item, index) => <button  onClick={()=>setActiveColor(item)}  key={index} style={{ backgroundColor: `${item}`,border:`${activeColor==item?'2px':'1px'} solid ${activeColor==item?'black':'gray'}` }} className={` mx-1  rounded-full w-6 h-6 focus:outline-none`} />)}
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
@@ -165,7 +170,7 @@ const Slug = ({ addToCart, removeFromCart, clearCart, subTotal, cart, product })
                       <option>M</option>
                       <option>L</option>
                       <option>XL</option> */}
-                      {product.size.map((item, index) => <option key={index}>{item}</option>)}
+                      {Object.keys(variant[activeColor]).map((item,key)=><option key={key}>{item}</option>)}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
@@ -223,38 +228,21 @@ const Slug = ({ addToCart, removeFromCart, clearCart, subTotal, cart, product })
 export async function getServerSideProps(context) {
   console.log(context.query.slug)
   let slug = context.query.slug
-  // let product = await Product.find({ slug: slug })
-  //   product = JSON.parse(JSON.stringify(product))
-  let products = await Product.find()
-  let tshirts = {}
-  for (let item of products) {
-    if (item.title in tshirts) {
-      if (item.availableQty > 0) {
-        if (!tshirts[item.title].color.includes(item.color)) {
-          tshirts[item.title].color.push(item.color);
-        }
-        if (!tshirts[item.title].size.includes(item.size)) {
-          tshirts[item.title].size.push(item.size);
-        }
-      }
-
-    } else {
-      tshirts[item.title] = JSON.parse(JSON.stringify(item))
-      if (item.availableQty > 0) {
-        tshirts[item.title].color = item.color.split(' ')
-        tshirts[item.title].size = item.size.split(' ')
-      }
+  let product = await Product.findOne({ slug: slug })
+    product = JSON.parse(JSON.stringify(product))
+  let variant = await Product.find({title:product.title})//similar product with same title
+  let colorSizeSlug={}//{red:{xl:wear-the-code}}
+  for(let item of  variant){
+    if(Object.keys(colorSizeSlug).includes(item.color)) {
+      colorSizeSlug[item.color][item.size]={slug:item.slug}//inserting new 
+    }else{
+       colorSizeSlug[item.color]={}//intialising color object before adding size slug
+       colorSizeSlug[item.color][item.size]={slug:item.slug}//inserting n
     }
+    console.log(colorSizeSlug)
   }
-  let product = null
-  for (let key of Object.keys(tshirts)) {
-    if (tshirts[key].slug == slug) {
-      product = tshirts[key];
-    }
-  }
-  console.log('product', product)
   return {
-    props: { product }
+    props: { product,variant:JSON.parse(JSON.stringify(colorSizeSlug)) }, 
   }
 }
 export default Slug

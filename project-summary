@@ -41,4 +41,5 @@
 //we will encounter an error in serialisability ,solution:JSON.parse(JSON.stringify(products))and retrieving data from database and displaying them on pagess
 
 //tshirts variant:converting data into json format such a way we can know which size,color for given product is available,with key as product_name,value as whole object,depending on its data we are populating tshirts page and its product page
-//now we create object where along with products,we have to know each color size availability
+//now we create object where along with products,we have to know each color size availability,we should show sizes such a way that there should be that size,color combination
+//logic:first we highlight a color from products and show its respective sizes in dropdown and which other is clicked it becomes active and show its sizes,sizes and its respective sizes are there in variant
