@@ -47,3 +47,5 @@
 //logic3:data logic is each product has title and its size and  color,similarly there can be same product with different size and color combination,same product but with different size ,color ,slug,on retreiving data we retreive data on slug which contains basic data from db as slug is unique,also retireve its variants which have same title names,from that we sort data as size availables for given color like{red:[{xl:slug1},{s:slug2}] }
 //on clicking the button,we will refreshe the page with selected size and color combination slug in variant data
 //window.location=url//to change website url
+
+//replaced dummy data on footer and products,cart
