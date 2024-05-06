@@ -43,3 +43,7 @@
 //tshirts variant:converting data into json format such a way we can know which size,color for given product is available,with key as product_name,value as whole object,depending on its data we are populating tshirts page and its product page
 //now we create object where along with products,we have to know each color size availability,we should show sizes such a way that there should be that size,color combination
 //logic:first we highlight a color from products and show its respective sizes in dropdown and which other is clicked it becomes active and show its sizes,sizes and its respective sizes are there in variant
+//logic:improves logic such that based on value of size in drop down ,its only shows its avialable colors
+//logic3:data logic is each product has title and its size and  color,similarly there can be same product with different size and color combination,same product but with different size ,color ,slug,on retreiving data we retreive data on slug which contains basic data from db as slug is unique,also retireve its variants which have same title names,from that we sort data as size availables for given color like{red:[{xl:slug1},{s:slug2}] }
+//on clicking the button,we will refreshe the page with selected size and color combination slug in variant data
+//window.location=url//to change website url

@@ -3,14 +3,35 @@ import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import Product from '@/modals/Product';
 
-const Slug = ({ addToCart, product,variant }) => {
-  console.log("product", product)
+const Slug = ({ addToCart, product, variant }) => {
+  // console.log("product", product)
+  // console.log("variant", variant)
+  useEffect(()=>{
+    console.log("product", product)
   console.log("variant", variant)
+  },[])
   const [activeColor, setActiveColor] = useState(product.color.split(' ')[0]);
-  Object.keys(variant).map((item)=>{
-    console.log('key',item)
-  })
 
+  const sizeArray = createSizeArray()
+  function createSizeArray() {
+    const sizeArray = []
+    for (let item of Object.keys(variant)) {
+      for (let item2 of Object.keys(variant[item])) {
+        if (!sizeArray.includes(item2)) {
+          sizeArray.push(item2)
+        }
+      }
+    }
+    return sizeArray
+  }
+  
+  // console.log("sizeArray", sizeArray)
+
+  // Object.keys(variant).map((item) => {
+  //   console.log('key', item)
+  // })
+
+  const [activeSize, setActiveSize] = useState(sizeArray[0]);
   const [pinStatus, setPinStatus] = useState(null);
   let pinRef = useRef()
   useEffect(() => {
@@ -37,7 +58,19 @@ const Slug = ({ addToCart, product,variant }) => {
     setPinStatus(null);
   }
 
+  const handleSizeChange = (e) => {
+    console.log('handleSizeChange is clicked ',e.currentTarget.value)
+    setActiveSize(e.currentTarget.value)
+  }
 
+  const refreshVariant = (color,size,e) => {
+    e.preventDefault()
+    const url=`http://localhost:3000/products/${variant[color][size]['slug']}`
+    // console.log('entered refreshVariant',color,size)
+    // console.log('url',url)
+    window.location=url
+  }
+  
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -53,10 +86,11 @@ const Slug = ({ addToCart, product,variant }) => {
                 BRAND NAME
               </h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1 capitalize" >
-                {/* {slug && slug.split('-').join(' ')} */}
-                {product.title}
+                {/* {product.slug && product.slug.split('-').join(' ')} */}
+                {product.title} ({product.size}/{product.color})
+                {/* {product.title} */}
               </h1>
-              <div className="flex mb-4">
+              {/* <div className="flex mb-4">
                 <span className="flex items-center">
                   <svg
                     fill="currentColor"
@@ -153,24 +187,31 @@ const Slug = ({ addToCart, product,variant }) => {
                     </svg>
                   </a>
                 </span>
-              </div>
+              </div> */}
               <p className="leading-relaxed">
                 {product.desc}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                 <div className="flex">
                   <span className="mr-3">Color</span>
-                  {Object.keys(variant).map((item, index) => <button  onClick={()=>setActiveColor(item)}  key={index} style={{ backgroundColor: `${item}`,border:`${activeColor==item?'2px':'1px'} solid ${activeColor==item?'black':'gray'}` }} className={` mx-1  rounded-full w-6 h-6 focus:outline-none`} />)}
+                  {
+                    Object.keys(variant).map((item, index) => Object.keys(variant[item]).includes(activeSize) ? <button
+                      onClick={(e)=>{setActiveColor(item)
+                      refreshVariant(item,activeSize,e)
+                      }} 
+                      key={index} style={{ backgroundColor: `${item}`, border: `${activeColor == item ? '2px' : '1px'} solid ${activeColor == item ? 'black' : 'gray'}` }} className={` mx-1  rounded-full w-6 h-6 focus:outline-none`} ></button> :"")
+                  }
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
-                    <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10">
+                    <select onChange={(e)=>handleSizeChange(e)} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10">
                       {/* <option>SM</option>
                       <option>M</option>
                       <option>L</option>
                       <option>XL</option> */}
-                      {Object.keys(variant[activeColor]).map((item,key)=><option key={key}>{item}</option>)}
+                      {/* {Object.keys(variant[activeColor]).map((item,key)=><option key={key}>{item}</option>)} */}
+                      {sizeArray.map((item, index) => <option key={index}>{item}</option>)}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
@@ -229,20 +270,20 @@ export async function getServerSideProps(context) {
   console.log(context.query.slug)
   let slug = context.query.slug
   let product = await Product.findOne({ slug: slug })
-    product = JSON.parse(JSON.stringify(product))
-  let variant = await Product.find({title:product.title})//similar product with same title
-  let colorSizeSlug={}//{red:{xl:wear-the-code}}
-  for(let item of  variant){
-    if(Object.keys(colorSizeSlug).includes(item.color)) {
-      colorSizeSlug[item.color][item.size]={slug:item.slug}//inserting new 
-    }else{
-       colorSizeSlug[item.color]={}//intialising color object before adding size slug
-       colorSizeSlug[item.color][item.size]={slug:item.slug}//inserting n
+  product = JSON.parse(JSON.stringify(product))
+  let variant = await Product.find({ title: product.title })//similar product with same title
+  let colorSizeSlug = {}//{red:{xl:wear-the-code}}
+  for (let item of variant) {
+    if (Object.keys(colorSizeSlug).includes(item.color)) {
+      colorSizeSlug[item.color][item.size] = { slug: item.slug }//inserting new 
+    } else {
+      colorSizeSlug[item.color] = {}//intialising color object before adding size slug
+      colorSizeSlug[item.color][item.size] = { slug: item.slug }//inserting n
     }
     console.log(colorSizeSlug)
   }
   return {
-    props: { product,variant:JSON.parse(JSON.stringify(colorSizeSlug)) }, 
+    props: { product, variant: JSON.parse(JSON.stringify(colorSizeSlug)) },
   }
 }
 export default Slug
