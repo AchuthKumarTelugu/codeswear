@@ -22,29 +22,22 @@ export default function App({ Component, pageProps }) {
 
   }, [])
 
+  const calculateSubTotal = (cartItems) => {
+    let subTotal=0;
+    Object.values(cartItems).forEach((item)=>{
+      subTotal += item.price * item.qty
+    })
+    setSubTotal(subTotal)
+  }
+  
   const saveCart = (data) => {
     localStorage.setItem("cart", JSON.stringify(data))
-    let subtotal=0;
-    let myCart=cart
-    let keys=Object.keys(myCart)
-    for(let i=0;i<keys.length;i++) {
-      let price=myCart[keys[i]].qty *myCart[keys[i]].price
-      console.log("price",price,typeof price)
-      // subtotal=myCart[keys[i]].qty *myCart[keys[i]].price
-      subtotal=price
-    }
-    setSubTotal(subtotal)
-    if(data=={}) {
-      localStorage.setItem("subtotal",JSON.stringify(0))
-    } else {
-      localStorage.setItem("subtotal",JSON.stringify(subTotal))
-    }
+    calculateSubTotal(data)
   }
   const clearCart = () => {
     setCart({})
     saveCart({})
     setSubTotal(0)
-    console.log("cart has been cleared")
   }
 useEffect(()=>{
   if(subTotal > 0) {
@@ -52,16 +45,9 @@ useEffect(()=>{
   }
 },[subTotal])
   function addToCart(itemCode, price, qty, variant, name,color) {
-    console.log("entered add to cart")
-    console.log(itemCode, price, qty, variant, name)
-    let myCart = cart;
-    console.log("myCart",myCart)
-    console.log("itemCode in myCart",myCart[itemCode])
-    console.log("!itemCode in myCart",!myCart[itemCode])
+    let myCart = {...cart};
     if ( myCart[itemCode]) {
-      console.log("item is present in cart")
       myCart[itemCode].qty = qty + myCart[itemCode].qty;
-      // myCart[itemCode].price = price + myCart[itemCode].price;
     } else  {
       console.log("item is not present in cart")
       myCart[itemCode] = { price, qty: 1, variant, name ,color};
@@ -96,4 +82,3 @@ useEffect(()=>{
     <Footer />
   </>
 }
-
