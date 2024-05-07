@@ -68,7 +68,7 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
               {Object.keys(cart).map((k) => <li key={k} >
                 <div className="item flex py-3">
                   <div className='w-2/3 font-semibold grid place-content-center text-lg md:text-xl capitalize'>{cart[k].name} ({cart[k].variant}/{cart[k].color}) </div>
-                  <div className='w-1/3 font-bold flex justify-center items-center gap-x-1 text-xl '> <CiCircleMinus className='text-pink-500' onClick={() => removeFromCart(k, cart[k].price, 1, cart[k].variant, cart[k].name)} /> {cart[k].qty}<CiCirclePlus className='text-pink-500' onClick={() => addToCart(k, cart[k].price, 1, cart[k].variant, cart[k].name)} /> </div>
+                  <div className='w-1/3 font-bold flex justify-center items-center gap-x-1 text-xl '> <CiCircleMinus className='text-pink-500' onClick={() => removeFromCart(k, 1)} /> {cart[k].qty}<CiCirclePlus className='text-pink-500' onClick={() => addToCart(k, cart[k].price, 1, cart[k].variant, cart[k].name)} /> </div>
                 </div>
               </li>)}
               {Object.keys(cart).length > 0 ? <div className='text-lg text-pink-500 font-semibold ml-5 mt-7'>SubTotal : ₹{subTotal}</div> : null}
