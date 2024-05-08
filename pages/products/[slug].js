@@ -2,6 +2,9 @@ import { Router, useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import Product from '@/modals/Product';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce } from 'react-toastify';
 
 const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
   // console.log("product", product)
@@ -25,12 +28,6 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
     }
     return sizeArray
   }
-  
-  // console.log("sizeArray", sizeArray)
-
-  // Object.keys(variant).map((item) => {
-  //   console.log('key', item)
-  // })
 
   const [activeSize, setActiveSize] = useState(sizeArray[0]);
   const [pinStatus, setPinStatus] = useState(null);
@@ -47,9 +44,32 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
       const pincodes = response.data
       console.log('pincodes', typeof pincodes, pincodes)
       if (pincodes.includes(pinValue)) {
-        setPinStatus(false);
+        setPinStatus(true);
+        toast.success('Pincode is available', {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          });
+
       } else {
-        setPinStatus(true)
+        setPinStatus(false)
+        toast.warn('Pincode is not available', {
+          position: "bottom-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          transition: Bounce,
+          });
       }
       pinRef.current.value = ''
 
@@ -67,8 +87,6 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
   const refreshVariant = (color,size,e) => {
     e.preventDefault()
     const url=`http://localhost:3000/products/${variant[color][size]['slug']}`
-    // console.log('entered refreshVariant',color,size)
-    // console.log('url',url)
     window.location=url
   }
  
@@ -258,12 +276,13 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
                 <input ref={pinRef} onChange={(e) => onChangePin(e)} type="text" name="pin" id="" placeholder='enter your pincode' className='p-1 text-lg border-2 border-slate-400 rounded focus:outline-none  ' />
                 <button onClick={checkServicePin} className='flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded'> Check</button>
               </div>
-              {pinStatus == true && <p className='text-red-700 mt-2 font-semibold capitalize'>Sorry!We do not ship to this postal code.</p>}
-              {pinStatus == false && <p className='text-green-700 mt-2 font-semibold capitalize'>yah!This pincode is servicable</p>}
+              {pinStatus == false && <p className='text-red-700 mt-2 font-semibold capitalize'>Sorry!We do not ship to this postal code.</p>}
+              {pinStatus == true && <p className='text-green-700 mt-2 font-semibold capitalize'>yah!This pincode is servicable</p>}
             </div>
           </div>
         </div>
       </section>
+      <ToastContainer/>
 
     </div>
   )

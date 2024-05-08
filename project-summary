@@ -67,3 +67,4 @@
 //       </div>
 //     );
 //   }
+//we gave toastify messages to addToCart,removeFromCart,clearCart,checkPincodeServicability
