@@ -5,8 +5,23 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce } from 'react-toastify';
+
 export default function App({ Component, pageProps }) {
-  const router=useRouter()
+  const notify = (msg) => toast.success(`${msg}`, {
+    position: "bottom-center",
+    autoClose: 2000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    transition: Bounce,
+  })
+  const router = useRouter()
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(null)
   useEffect(() => {
@@ -43,6 +58,17 @@ export default function App({ Component, pageProps }) {
     setSubTotal(0)
     localStorage.setItem("cart", JSON.stringify({}));
     localStorage.setItem("subtotal", JSON.stringify(0));
+    toast.error('Clearing cart', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
   }
   useEffect(() => {
     if (subTotal > 0) {
@@ -59,6 +85,7 @@ export default function App({ Component, pageProps }) {
     }
     setCart(myCart)
     saveCart(myCart)
+    notify('added to cart')
   }
   function removeFromCart(itemCode, qty) {
     let myCart = { ...cart };
@@ -68,23 +95,35 @@ export default function App({ Component, pageProps }) {
       if (myCart[itemCode].qty <= 0) { // if quantity becomes less than 1 ,it becomes non-existence
         delete myCart[itemCode];
       }
+
+      toast.error("item removed!", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+        });
     }
 
     setCart(myCart)
     saveCart(myCart)
   }
-const buyNow=(itemCode, price, qty, variant, name, color)=>{
-  setCart({})
-  setSubTotal(0)
-  localStorage.setItem("cart", JSON.stringify({}));
-  localStorage.setItem("subtotal", JSON.stringify(0));//clearing code raw logic
-let myCart={...cart}
-myCart[itemCode] = { price, qty: 1, variant, name, color };
-  setCart(myCart)
-  saveCart(myCart)
+  const buyNow = (itemCode, price, qty, variant, name, color) => {
+    setCart({})
+    setSubTotal(0)
+    localStorage.setItem("cart", JSON.stringify({}));
+    localStorage.setItem("subtotal", JSON.stringify(0));//clearing code raw logic
+    let myCart = { ...cart }
+    myCart[itemCode] = { price, qty: 1, variant, name, color };
+    setCart(myCart)
+    saveCart(myCart)
 
-  router.push('/checkout')
-}
+    router.push('/checkout')
+  }
   return <>
     <Head>
       <title>Codeswear.com</title>
@@ -93,6 +132,7 @@ myCart[itemCode] = { price, qty: 1, variant, name, color };
     </Head>
     <Navbar addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />
     <Component {...pageProps} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} buyNow={buyNow} />;
+    <ToastContainer />
     <Footer />
   </>
 }

@@ -51,3 +51,19 @@
 //replaced dummy data on footer and products,cart
 
 //making buy now button:directly add it into cart and redirecting to checkout page,iam writing buyNow function in _app.js instead of product page because its a asynhc function which will not immedieately show action
+
+//react toastify:it is used to add notification popups to our website so easy,npm install --save react-toastify,import React from 'react';
+
+//   import { ToastContainer, toast } from 'react-toastify';
+//   import 'react-toastify/dist/ReactToastify.css';
+  
+//   function App(){
+//     const notify = () => toast("Wow so easy!");
+
+//     return (
+//       <div>
+//         <button onClick={notify}>Notify!</button>
+//         <ToastContainer />
+//       </div>
+//     );
+//   }
