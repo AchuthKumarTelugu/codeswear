@@ -58,7 +58,7 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
             <FaCartShopping onClick={toggleCart} className='hover:text-[#FF87A5]' />
           </button>
 
-          <div ref={ref} className="z-[999] sideCart w-80 h-full absolute top-0 right-0 bg-pink-200 px-6 py-6  
+          <div ref={ref} className="z-[999] sideCart w-80 h-full overflow-y-scroll absolute top-0 right-0 bg-pink-200 px-6 py-6  
            hidden"
           >
             <h1 className='font-bold text-2xl text-center capitalize'>This is shopping cart</h1>

@@ -49,3 +49,5 @@
 //window.location=url//to change website url
 
 //replaced dummy data on footer and products,cart
+
+//making buy now button:directly add it into cart and redirecting to checkout page,iam writing buyNow function in _app.js instead of product page because its a asynhc function which will not immedieately show action

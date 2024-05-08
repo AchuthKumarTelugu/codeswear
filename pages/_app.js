@@ -3,7 +3,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+
 export default function App({ Component, pageProps }) {
+  const router=useRouter()
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(null)
   useEffect(() => {
@@ -70,7 +73,18 @@ export default function App({ Component, pageProps }) {
     setCart(myCart)
     saveCart(myCart)
   }
+const buyNow=(itemCode, price, qty, variant, name, color)=>{
+  setCart({})
+  setSubTotal(0)
+  localStorage.setItem("cart", JSON.stringify({}));
+  localStorage.setItem("subtotal", JSON.stringify(0));//clearing code raw logic
+let myCart={...cart}
+myCart[itemCode] = { price, qty: 1, variant, name, color };
+  setCart(myCart)
+  saveCart(myCart)
 
+  router.push('/checkout')
+}
   return <>
     <Head>
       <title>Codeswear.com</title>
@@ -78,7 +92,7 @@ export default function App({ Component, pageProps }) {
       <meta name="description" content="CodesWear.com - Wear the code" />
     </Head>
     <Navbar addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />
-    <Component {...pageProps} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />;
+    <Component {...pageProps} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} buyNow={buyNow} />;
     <Footer />
   </>
 }
