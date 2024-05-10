@@ -10,17 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Bounce } from 'react-toastify';
 
 export default function App({ Component, pageProps }) {
-  const notify = (msg) => toast.success(`${msg}`, {
-    position: "bottom-center",
-    autoClose: 2000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    transition: Bounce,
-  })
+  
   const router = useRouter()
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(null)
@@ -60,7 +50,7 @@ export default function App({ Component, pageProps }) {
     localStorage.setItem("subtotal", JSON.stringify(0));
     toast.error('Clearing cart', {
       position: "top-center",
-      autoClose: 2000,
+      autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -85,7 +75,17 @@ export default function App({ Component, pageProps }) {
     }
     setCart(myCart)
     saveCart(myCart)
-    notify('added to cart')
+    toast.success(`item added`, {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    })
   }
   function removeFromCart(itemCode, qty) {
     let myCart = { ...cart };
@@ -98,7 +98,7 @@ export default function App({ Component, pageProps }) {
 
       toast.error("item removed!", {
         position: "bottom-center",
-        autoClose: 2000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,

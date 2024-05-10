@@ -1,7 +1,53 @@
 import Link from 'next/link'
-import React from 'react'
-
+import React, { useState } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify';
+import { Bounce } from 'react-toastify';
 const Login = () => {
+  const jwt = require('jsonwebtoken');
+  const router=useRouter()
+  const [userInfo, setUserInfo] = useState({
+    email: "", password: ""
+  })
+  const onChange = (e) => {
+    setUserInfo({ ...userInfo, [e.currentTarget.name]: e.currentTarget.value })
+  }
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    // console.log("userinfo", userInfo)
+    try {
+      // const recieved_data = await axios.post('http://localhost:3000/api/Login', userInfo)
+      axios.post('http://localhost:3000/api/Login', userInfo).then((value) => {
+        if (value.data.success) {
+          alert('user detected')
+          localStorage.setItem('token',(value.data.token))//setting token in local storage
+          router.push('/')
+        } 
+        setUserInfo({
+          email: "", password: ""
+        })
+      }).catch(err=>{
+        // console.log(err)
+        // alert('user not found')
+        toast.error("Incorrect password/email entered", {
+          position: "top-center",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+          });
+      })
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -16,7 +62,7 @@ const Login = () => {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -31,6 +77,7 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   required=""
+                  value={userInfo.email} onChange={onChange}
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -59,6 +106,7 @@ const Login = () => {
                   type="password"
                   autoComplete="current-password"
                   required=""
+                  value={userInfo.password} onChange={onChange}
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -83,7 +131,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-
+<ToastContainer/>
     </div>
   )
 }

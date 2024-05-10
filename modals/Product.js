@@ -10,6 +10,7 @@ const productSchema = new Schema({
     color: { type: String },
     price: { type: Number, required: true },
     availableQty: { type: Number, required: true },
+    category: { type: String, required: true },
 }, { timestamps: true })//gives us created at and updated at property
-mongoose.models={}
+mongoose.models = {}
 export default mongoose.model("products", productSchema)

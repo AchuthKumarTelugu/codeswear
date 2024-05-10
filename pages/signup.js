@@ -1,6 +1,59 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce } from 'react-toastify';
 const Signup = () => {
+  const router = useRouter()
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    name: "",
+    password: ""
+  })
+  const onChange = (e) => {
+    setUserInfo({ ...userInfo, [e.currentTarget.name]: e.currentTarget.value })
+  }
+  const handleSubmit = async (e) => {
+
+    try {
+      e.preventDefault()
+      console.log("user data", userInfo)
+      const Data = await axios.post("http://localhost:3000/api/signup",userInfo)
+      const response = Data.data
+      // console.log('response', response)
+      if (response.success) {
+        // toast.success("user created", {
+        //   position: "top-center",
+        //   autoClose: 1000,
+        //   hideProgressBar: false,
+        //   closeOnClick: true,
+        //   pauseOnHover: true,
+        //   draggable: true,
+        //   progress: undefined,
+        //   theme: "light",
+        //   transition: Bounce,
+        //   });
+        alert("user created")
+        setUserInfo({
+          email: "",
+          name: "",
+          password: ""
+        })
+       
+          router.push('/login')
+      }
+      else {
+        alert("error occured")
+      }
+    } catch (error) {
+      console.log(error);
+
+    }
+
+  }
+
   return (
     <div>
       <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -15,13 +68,13 @@ const Signup = () => {
           </h2>
         </div>
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="name"
                 className="block text-sm font-medium leading-6 text-gray-900"
               >
-               Username
+                Username
               </label>
               <div className="mt-2">
                 <input
@@ -29,6 +82,7 @@ const Signup = () => {
                   name="name"
                   type="text"
                   required=""
+                  value={userInfo.name} onChange={onChange}
                   className="block w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6 "
                 />
               </div>
@@ -47,6 +101,7 @@ const Signup = () => {
                   type="email"
                   autoComplete="email"
                   required=""
+                  value={userInfo.email} onChange={onChange}
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                 />
               </div>
@@ -75,6 +130,7 @@ const Signup = () => {
                   type="password"
                   autoComplete="current-password"
                   required=""
+                  value={userInfo.password} onChange={onChange}
                   className="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-pink-600 sm:text-sm sm:leading-6"
                 />
               </div>

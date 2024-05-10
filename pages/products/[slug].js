@@ -2,9 +2,7 @@ import { Router, useRouter } from 'next/router'
 import React, { useEffect, useRef, useState } from 'react'
 import axios from 'axios';
 import Product from '@/modals/Product';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Bounce } from 'react-toastify';
+
 
 const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
   // console.log("product", product)
@@ -45,31 +43,10 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
       console.log('pincodes', typeof pincodes, pincodes)
       if (pincodes.includes(pinValue)) {
         setPinStatus(true);
-        toast.success('Pincode is available', {
-          position: "bottom-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Bounce,
-          });
-
+       
       } else {
         setPinStatus(false)
-        toast.warn('Pincode is not available', {
-          position: "bottom-center",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          transition: Bounce,
-          });
+      
       }
       pinRef.current.value = ''
 
@@ -212,10 +189,10 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
                 {product.desc}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                <div className="flex">
+                 <div className="flex">
                   <span className="mr-3">Color</span>
                   {
-                    Object.keys(variant).map((item, index) => Object.keys(variant[item]).includes(activeSize) ? <button
+                    Object.keys(variant).map((item, index) => Object.keys(variant[item]).includes(activeSize)  ? <button
                       onClick={(e)=>{setActiveColor(item)
                       refreshVariant(item,activeSize,e)
                       }} 
@@ -282,16 +259,14 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
           </div>
         </div>
       </section>
-      <ToastContainer/>
 
     </div>
   )
 }
 export async function getServerSideProps(context) {
-  console.log(context.query.slug)
   let slug = context.query.slug
   let product = await Product.findOne({ slug: slug })
-  product = JSON.parse(JSON.stringify(product))
+  product =  JSON.parse(JSON.stringify(product))
   let variant = await Product.find({ title: product.title })//similar product with same title
   let colorSizeSlug = {}//{red:{xl:wear-the-code}}
   for (let item of variant) {

@@ -5,7 +5,7 @@ import Product from '@/modals/Product';
 
 const Tshirts = (props) => {
   let { tshirts } = props;
- console.log("tshirts",tshirts)
+  console.log("tshirts", tshirts)
   return (
     <div>
       <section className="text-gray-600 body-font">
@@ -33,8 +33,8 @@ const Tshirts = (props) => {
                         {tshirts[item].title}
                       </h2>
                       <p className="mt-1">₹{tshirts[item].price}</p>
-                      <p className='mt-1 flex gap-2 uppercase '>{tshirts[item].size.map((item,index)=><span key={index} className='border-2 text-center px-2 py-1 '>{item}</span>)}</p>
-                      <p className='mt-3 flex gap-2 uppercase '>{tshirts[item].color.map((item,index)=><span key={index} className='w-6 h-6 rounded-full border-2' style={{backgroundColor:`${item}`}}></span>)}</p>
+                      <p className='mt-1 flex gap-2 uppercase '>{tshirts[item].size.map((item, index) => <span key={index} className='border-2 text-center px-2 py-1 '>{item}</span>)}</p>
+                      <p className='mt-3 flex gap-2 uppercase '>{tshirts[item].color.map((item, index) => <span key={index} className='w-6 h-6 rounded-full border-2' style={{ backgroundColor: `${item}` }}></span>)}</p>
                     </div>
                   </Link>
                 </div>
@@ -52,7 +52,7 @@ export async function getServerSideProps(context) {
     await mongoose.connect(process.env.MONGO_URI);
   }
 
-  let products = await Product.find({});
+  let products = await Product.find({ category: "tshirts" });
   products = JSON.parse(JSON.stringify(products)); // to make JSON serializable
 
   let tshirts = {}; // key is tshirt title and value is its whole object

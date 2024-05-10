@@ -1,0 +1,68 @@
+[
+  {
+    "title": "The Earth Store Glam Studio Coffee Mug Set of 2 Ceramic Mugs to Gift to Best Friend, Tea Mugs, Microwave Safe Coffee Mugs, Ceramic Tea Cups",
+    "slug": "use-the-mugs-Large-RED",
+    "desc": "Start your morning with your favorite cup of tea/coffee, If you are looking for the best and unique tea cups set for your Coffee, Evening tea, Bed tea, Black tea, Green tea then these cups are the best option for you.",
+    "img": "https://m.media-amazon.com/images/I/51Mk0CHXvUL._SX300_SY300_QL70_FMwebp_.jpg",
+    "size": "1L",
+    "color": "red",
+    "price": 200,
+    "availableQty": 2,
+    "category": "mugs"
+  },
+  {
+    "title": "Larah by BOROSIL Sivas Mug, 350ml, Multicolor (Opalware)",
+    "slug": "use-the-mugs-Large-BLUE",
+    "desc": "Well Made Aesthetic Stickers : Introducing our aesthetic mugs, meticulously crafted from self-adhesive vinyl. Printed with revolutionary high-definition printers, these mugs unveil mesmerizingly clear and ultra-precise patterns that effortlessly amplify your style.",
+    "img": "https://m.media-amazon.com/images/I/51xmjFUnNyL._SX679_.jpg,
+    "size": "1L",
+    "color": "blue",
+    "price": 200,
+    "availableQty": 2,
+    "category": "mugs"
+  },
+  {
+    "title": "U & U UNIQUE UTILITIES Ceramic Coffee Mug Milk Cup for Home & Office Gift (Purple) - 450 ML",
+    "slug": "use-the-mugs-Large-WHITE",
+    "desc": "Start your morning with your favorite cup of tea/coffee, If you are looking for the best and unique tea cups set for your Coffee, Evening tea, Bed tea, Black tea, Green tea then these cups are the best option for you.",
+    "img": "https://m.media-amazon.com/images/I/31LYttNuftL._SX300_SY300_QL70_FMwebp_.jpg",
+    "size": "1L",
+    "color": "white",
+    "price": 200,
+    "availableQty": 2,
+    "category": "mugs"
+  },
+  {
+    "title": "The Earth Store Glam Studio Coffee Mug Set of 2 Ceramic Mugs to Gift to Best Friend, Tea Mugs, Microwave Safe Coffee Mugs, Ceramic Tea Cups",
+    "slug": "use-the-mugs-Small-WHITE",
+    "desc": "Start your morning with your favorite cup of tea/coffee, If you are looking for the best and unique tea cups set for your Coffee, Evening tea, Bed tea, Black tea, Green tea then these cups are the best option for you.",
+    "img": "https://m.media-amazon.com/images/I/51Mk0CHXvUL._SX300_SY300_QL70_FMwebp_.jpg",
+    "size": "250ml",
+    "color": "white",
+    "price": 200,
+    "availableQty": 1,
+    "category": "mugs"
+  },
+  {
+    "title": "The Earth Store Glam Studio Coffee Mug Set of 2 Ceramic Mugs to Gift to Best Friend, Tea Mugs, Microwave Safe Coffee Mugs, Ceramic Tea Cups",
+    "slug": "use-the-mugs-Medium-WHITE",
+    "desc": "Start your morning with your favorite cup of tea/coffee, If you are looking for the best and unique tea cups set for your Coffee, Evening tea, Bed tea, Black tea, Green tea then these cups are the best option for you.",
+    "img": "https://m.media-amazon.com/images/I/51Mk0CHXvUL._SX300_SY300_QL70_FMwebp_.jpg",
+    "size": "500ml",
+    "color": "white",
+    "price": 200,
+    "availableQty": 1,
+    "category": "mugs"
+  },
+  {
+    "title": "The Earth Store Glam Studio Coffee Mug Set of 2 Ceramic Mugs to Gift to Best Friend, Tea Mugs, Microwave Safe Coffee Mugs, Ceramic Tea Cups",
+    "slug": "use-the-mugs-RED-SMALL",
+    "desc": "Start your morning with your favorite cup of tea/coffee, If you are looking for the best and unique tea cups set for your Coffee, Evening tea, Bed tea, Black tea, Green tea then these cups are the best option for you.",
+    "img": "https://m.media-amazon.com/images/I/51Mk0CHXvUL._SX300_SY300_QL70_FMwebp_.jpg",
+    "size": "250ml",
+    "color": "red",
+    "price": 200,
+    "availableQty": 1,
+    "category": "mugs"
+  }
+]

@@ -3,9 +3,32 @@ import { Inter } from "next/font/google";
 import Head from 'next/head'
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { ToastContainer, toast } from 'react-toastify';
+import { Bounce } from 'react-toastify';
 const inter = Inter({ subsets: ["latin"] });
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Home() {
+const router=useRouter()
+useEffect(()=>{
+  if((localStorage.getItem('token'))) {
+    // alert('welcome user')
+    toast.success("welcome user", {
+      position: "top-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+      });
+  }else{
+    router.push('/login')
+  }
+},[])
   return (
     <main>
       {/* <Head>
