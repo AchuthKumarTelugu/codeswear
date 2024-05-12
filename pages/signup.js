@@ -24,17 +24,7 @@ const Signup = () => {
       const response = Data.data
       // console.log('response', response)
       if (response.success) {
-        // toast.success("user created", {
-        //   position: "top-center",
-        //   autoClose: 1000,
-        //   hideProgressBar: false,
-        //   closeOnClick: true,
-        //   pauseOnHover: true,
-        //   draggable: true,
-        //   progress: undefined,
-        //   theme: "light",
-        //   transition: Bounce,
-        //   });
+       
         alert("user created")
         setUserInfo({
           email: "",

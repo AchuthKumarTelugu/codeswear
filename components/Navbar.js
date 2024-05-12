@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { IoIosCloseCircle } from "react-icons/io";
@@ -6,21 +6,12 @@ import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
 import { FaCartShopping } from "react-icons/fa6";
 import { IoBagCheckSharp } from "react-icons/io5";
 import { MdAccountCircle } from "react-icons/md";
-const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
+import { useRouter } from 'next/router';
+const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart, key, user }) => {
+  const router = useRouter()
   const ref = useRef()
   const toggleCart = () => {
-    console.log("entered toggleCart")
-    console.log(ref.current)
 
-    //checking if sideCart has translate-x-full property ,if has remove it vice versa
-    // if(ref.current.classList.contains("translate-x-full")) {
-    //   ref.current.classList.remove("translate-x-full")
-    //   ref.current.classList.add("translate-x-0")
-    // }
-    // else if(!ref.current.classList.contains("translate-x-full")) {
-    //   ref.current.classList.add("translate-x-full")
-    //   ref.current.classList.remove("translate-x-0")
-    // }
     if (ref.current.classList.contains("hidden")) {
       ref.current.classList.remove("hidden")
     }
@@ -28,14 +19,22 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
       ref.current.classList.add("hidden")
     }
   }
-  useEffect(() => {
 
-    console.log("cart", cart, "subTotal", subTotal);
-
-  }, [])
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    alert('logout successful!')
+    // router.push('/login')
+    window.location = '/login'
+  }
+  // console.log('user',user)
+  const [dropdown, setDropdown] = useState(false)
+  const handleDropdown = () => {
+    console.log('dropdown is called')
+    setDropdown(!dropdown)
+  }
 
   return (
-    <div>
+    <div className='bg-slate-100'>
       <div className="flex justify-between items-center px-10  gap-4 md:gap-4 py-3 md:py-2 bg-slate-100 shadow-lg mb-3  md:justify-between md:flex-row ">
         <div className='flex gap-3 items-center flex-col md:flex-row '>
           <div className="logo">
@@ -53,10 +52,22 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
           </div>
         </div>
         <div className="cart">
-          <button  className=' px-6 py-3 font-bold text-3xl rounded  relative flex gap-6 flex-col md:flex-row'>
-           <Link href={'/login'}> <MdAccountCircle  className='hover:text-[#FF87A5]'/></Link>
+          <div className=' px-6 py-2 font-bold text-3xl rounded  relative flex gap-6 flex-col md:flex-row'>
+            <a>
+              {dropdown && <div onMouseLeave={() => setDropdown(false)} className="text-sm  font-semibold absolute right-12 top-12 bg-white shadow-md border  rounded-md py-2 px-3 w-36 md:w-54" >
+                <ul className='flex flex-col gap-4'>
+                  <Link href={'/Orders'}><li className='hover:underline hover:text-pink-500 cursor-pointer'>Orders</li></Link>
+                  <Link href={'MyAccount'}> <li className='hover:underline hover:text-pink-500 cursor-pointer'>My account</li></Link>
+                  <li onClick={handleLogout} className='hover:underline cursor-pointer hover:text-pink-500'>Log out</li>
+                  <li className='hover:underline hover:text-pink-500'></li>
+                </ul>
+              </div>}
+
+              {user && user.value ? <div > <MdAccountCircle onMouseEnter={handleDropdown} className='hover:text-[#FF87A5] text-4xl' /></div> : ""}
+            </a>
+            {user && !(user.value) ? <Link href={'/login'} ><div className=' text-base md:text-xl font-semibold hover:hover:text-[#CE2BCE] hover:bg-pink-200 bg-pink-500 text-white px-2 md:px-4 py-1 md:py-2 rounded '>Login</div></Link> : ""}
             <FaCartShopping onClick={toggleCart} className='hover:text-[#FF87A5]' />
-          </button>
+          </div>
 
           <div ref={ref} className="z-[999] sideCart w-80 h-full overflow-y-scroll absolute top-0 right-0 bg-pink-200 px-6 py-6  
            hidden"
@@ -67,7 +78,7 @@ const Navbar = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
               {Object.keys(cart).length <= 0 && <div className='font-semibold text-pink-500 text-center text-lg '>No items in cart :( ,Please add items few items to checkout</div>}
               {Object.keys(cart).map((k) => <li key={k} >
                 <div className="item flex py-3">
-                  <div className='w-2/3 font-semibold grid place-content-center text-lg md:text-xl capitalize'>{cart[k].name} ({cart[k].variant}{cart[k].color && "/"}{  cart[k].color}) </div>
+                  <div className='w-2/3 font-semibold grid place-content-center text-lg md:text-xl capitalize'>{cart[k].name} ({cart[k].variant}{cart[k].color && "/"}{cart[k].color}) </div>
                   <div className='w-1/3 font-bold flex justify-center items-center gap-x-1 text-xl '> <CiCircleMinus className='text-pink-500' onClick={() => removeFromCart(k, 1)} /> {cart[k].qty}<CiCirclePlus className='text-pink-500' onClick={() => addToCart(k, cart[k].price, 1, cart[k].variant, cart[k].name)} /> </div>
                 </div>
               </li>)}

@@ -75,3 +75,17 @@
 
 //added jwt token using npm i jsonwebtoken and jwt=jsonwebtoken.sign({data},secret_key,{expiresIn:"2h"}),upon login success ,i will send token to user ,where he will store it in localstorage,by checking localstorage for token we can verify that he is registered user
 //generally jwt contains header:which tells about type of algoirithim,payload:which contains our data,secret key:a secret key which is used access and change jwt token,if user has jwt token he will allowed to home page else he will be redirected to login page
+
+//created logout button,i created token taken from localstorage form _app.js to navbar through props and if user has jwt it shows logout button else login symbol,to use localstorage outside of page router ,we have to use it in useEffect,because next js bedefault runs on server where window object is not there,but useEffect wont runs on server  ,but on client side
+//iam making logic such that onMouseEnter the icon ,dropdown should display and onMouseLeave it should disappear ,but problem whenever iam want to click dropdown,its becoming disappear because we are leaving icon,solution for this is:we make icon and dropdown inside same div
+//added orders,logout,myAccount to dropdown
+
+//adding topLoadingBar to page for that we are using npm i react-top-loading-bar and creating a progress state,keeping loading bar element <LoadingBar
+    //     color='#f11946'
+    //     progress={progress}
+    //     onLoaderFinished={() => setProgress(0)}
+    //   />
+//to make progress bar we have to setProgress bar like setProgress(100),so we are using router events which are routerStart,routerComplete
+//when routerUrl about to change 
+    // router.events.on('routeChangeStart', ()=>setProgress(40))//on router events we have to give event name left ,function on right
+    // when routerUrl is completed loading :router.events.on('routerChangeComplete',()=>setProgress(100)),we wait property of loading bar to wait after reaching 100% for loading effect like <LoadingBar waitingTime={400}/>

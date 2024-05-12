@@ -4,16 +4,19 @@ import Footer from "@/components/Footer";
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Bounce } from 'react-toastify';
+import LoadingBar from 'react-top-loading-bar'
 
 export default function App({ Component, pageProps }) {
-  
+
   const router = useRouter()
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(null)
+  const [user, setUser] = useState({ value: null })
+  const [key, setKey] = useState(null)
+  const [progress, setProgress] = useState(0)
   useEffect(() => {
     console.log('entered cart useEffect');
     try {
@@ -27,8 +30,15 @@ export default function App({ Component, pageProps }) {
     } catch (error) {
       console.log(error);
     }
+    const token = localStorage.getItem('token')
+    if (token) {
+      setUser({ value: token })
+      setKey(Math.random())
+    }
+    console.log("hey iam useeffect from _app.js")
 
-  }, [])
+  }, [router.query])
+
 
   const calculateSubTotal = (cartItems) => {
     let subTotal = 0;
@@ -58,7 +68,7 @@ export default function App({ Component, pageProps }) {
       progress: undefined,
       theme: "light",
       transition: Bounce,
-      });
+    });
   }
   useEffect(() => {
     if (subTotal > 0) {
@@ -106,7 +116,7 @@ export default function App({ Component, pageProps }) {
         progress: undefined,
         theme: "light",
         transition: Bounce,
-        });
+      });
     }
 
     setCart(myCart)
@@ -124,14 +134,24 @@ export default function App({ Component, pageProps }) {
 
     router.push('/checkout')
   }
+  useEffect(()=>{
+    router.events.on('routeChangeStart', ()=>setProgress(40))
+    router.events.on('routeChangeComplete', ()=>setProgress(100))
+  },[router.events])
   return <>
     <Head>
       <title>Codeswear.com</title>
       <link rel="shortcut icon" href="/logo-2.png" />
       <meta name="description" content="CodesWear.com - Wear the code" />
     </Head>
-    <Navbar addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />
-    <Component {...pageProps} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} buyNow={buyNow} />;
+    <LoadingBar
+        color='#DB2777'
+        progress={progress}
+        waitingTime={400}
+        onLoaderFinished={() => setProgress(0)}
+      />
+    <Navbar addToCart={addToCart} key={key} user={user} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />
+    <Component   {...pageProps} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} buyNow={buyNow} />;
     <ToastContainer />
     <Footer />
   </>
