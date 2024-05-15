@@ -4,14 +4,14 @@ import axios from 'axios';
 import Product from '@/modals/Product';
 
 
-const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
+const Slug = ({ addToCart, clearCart, buyNow, product, variant }) => {
   // console.log("product", product)
   // console.log("variant", variant)
-  const router=useRouter()
-  useEffect(()=>{
+  const router = useRouter()
+  useEffect(() => {
     console.log("product", product)
-  console.log("variant", variant)
-  },[])
+    console.log("variant", variant)
+  }, [])
   const [activeColor, setActiveColor] = useState(product.color.split(' ')[0]);
 
   const sizeArray = createSizeArray()
@@ -38,15 +38,15 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
     const pinValue = pinRef.current.value;
     if (pinValue.length > 0) {
       console.log(pinRef.current.value, typeof pinValue);
-      let response = await axios.get('http://localhost:3000/api/pincodes')
+      let response = await axios.get(`${process.env.NEXT_PUBLIC_HOST}/api/pincodes`)
       const pincodes = response.data
       console.log('pincodes', typeof pincodes, pincodes)
       if (pincodes.includes(pinValue)) {
         setPinStatus(true);
-       
+
       } else {
         setPinStatus(false)
-      
+
       }
       pinRef.current.value = ''
 
@@ -57,17 +57,17 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
   }
 
   const handleSizeChange = (e) => {
-    console.log('handleSizeChange is clicked ',e.currentTarget.value)
+    console.log('handleSizeChange is clicked ', e.currentTarget.value)
     setActiveSize(e.currentTarget.value)
   }
 
-  const refreshVariant = (color,size,e) => {
+  const refreshVariant = (color, size, e) => {
     e.preventDefault()
-    const url=`http://localhost:3000/products/${variant[color][size]['slug']}`
-    window.location=url
+    const url = `${process.env.NEXT_PUBLIC_HOST}/products/${variant[color][size]['slug']}`
+    window.location = url
   }
- 
-  
+
+
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden">
@@ -189,20 +189,21 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
                 {product.desc}
               </p>
               <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                 <div className="flex">
+                <div className="flex">
                   <span className="mr-3">Color</span>
                   {
-                    Object.keys(variant).map((item, index) => Object.keys(variant[item]).includes(activeSize)  ? <button
-                      onClick={(e)=>{setActiveColor(item)
-                      refreshVariant(item,activeSize,e)
-                      }} 
-                      key={index} style={{ backgroundColor: `${item}`, border: `${activeColor == item ? '2px' : '1px'} solid ${activeColor == item ? 'black' : 'gray'}` }} className={` mx-1  rounded-full w-6 h-6 focus:outline-none`} ></button> :"")
+                    Object.keys(variant).map((item, index) => Object.keys(variant[item]).includes(activeSize) ? <button
+                      onClick={(e) => {
+                        setActiveColor(item)
+                        refreshVariant(item, activeSize, e)
+                      }}
+                      key={index} style={{ backgroundColor: `${item}`, border: `${activeColor == item ? '2px' : '1px'} solid ${activeColor == item ? 'black' : 'gray'}` }} className={` mx-1  rounded-full w-6 h-6 focus:outline-none`} ></button> : "")
                   }
                 </div>
                 <div className="flex ml-6 items-center">
                   <span className="mr-3">Size</span>
                   <div className="relative">
-                    <select onChange={(e)=>handleSizeChange(e)} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10">
+                    <select onChange={(e) => handleSizeChange(e)} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10">
                       {/* <option>SM</option>
                       <option>M</option>
                       <option>L</option>
@@ -230,10 +231,10 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
                 <span className="title-font font-medium text-2xl text-gray-900">
                   ₹{product.price}
                 </span>
-                <button  onClick={()=>buyNow(product.slug, product.price, product.availableQty, product.size, product.title, product.color)} className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                <button onClick={() => buyNow(product.slug, product.price, product.availableQty, product.size, product.title, product.color)} className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
                   Buy Now!
                 </button>
-                <button onClick={() => addToCart(product.slug, product.price, product.availableQty, product.size, product.title, product.color ) } className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
+                <button onClick={() => addToCart(product.slug, product.price, product.availableQty, product.size, product.title, product.color)} className="flex ml-3 text-white bg-pink-500 border-0 py-2 px-6 focus:outline-none hover:bg-pink-600 rounded">
                   Add to Cart
                 </button>
                 <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
@@ -263,23 +264,36 @@ const Slug = ({ addToCart,clearCart,buyNow,product, variant }) => {
     </div>
   )
 }
+
+
 export async function getServerSideProps(context) {
-  let slug = context.query.slug
-  let product = await Product.findOne({ slug: slug })
-  product =  JSON.parse(JSON.stringify(product))
-  let variant = await Product.find({ title: product.title })//similar product with same title
-  let colorSizeSlug = {}//{red:{xl:wear-the-code}}
-  for (let item of variant) {
-    if (Object.keys(colorSizeSlug).includes(item.color)) {
-      colorSizeSlug[item.color][item.size] = { slug: item.slug }//inserting new 
-    } else {
-      colorSizeSlug[item.color] = {}//intialising color object before adding size slug
-      colorSizeSlug[item.color][item.size] = { slug: item.slug }//inserting n
+  try {
+    let slug = context.query.slug;
+    let product = await Product.findOne({ slug: slug });
+    product = await JSON.parse(JSON.stringify(product))
+    if (!product) {
+      return {
+        notFound: true, // Return a 404 page if the product is not found
+      };
     }
-    console.log(colorSizeSlug)
-  }
-  return {
-    props: { product, variant: JSON.parse(JSON.stringify(colorSizeSlug)) },
+
+    let variant = await Product.find({ title: product.title });
+    let colorSizeSlug = {};
+
+    for (let item of variant) {
+      colorSizeSlug[item.color] = colorSizeSlug[item.color] || {};
+      colorSizeSlug[item.color][item.size] = { slug: item.slug };
+    }
+
+    return {
+      props: { product, variant: JSON.parse(JSON.stringify(colorSizeSlug)) },
+    };
+  } catch (error) {
+    console.error('Error fetching product data:', error);
+    return {
+      notFound: true, // Return a 404 page if an error occurs
+    };
   }
 }
+
 export default Slug

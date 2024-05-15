@@ -17,8 +17,8 @@ const Login = () => {
     e.preventDefault()
     // console.log("userinfo", userInfo)
     try {
-      // const recieved_data = await axios.post('http://localhost:3000/api/Login', userInfo)
-      axios.post('http://localhost:3000/api/Login', userInfo).then((value) => {
+    
+      axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/Login`, userInfo).then((value) => {
         if (value.data.success) {
           alert('user detected')
           localStorage.setItem('token',(value.data.token))//setting token in local storage

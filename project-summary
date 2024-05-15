@@ -89,3 +89,13 @@
 //when routerUrl about to change 
     // router.events.on('routeChangeStart', ()=>setProgress(40))//on router events we have to give event name left ,function on right
     // when routerUrl is completed loading :router.events.on('routerChangeComplete',()=>setProgress(100)),we wait property of loading bar to wait after reaching 100% for loading effect like <LoadingBar waitingTime={400}/>
+
+// created orders page in which is used i kept table form tailwind components and used getServerSideProps from which i will get Orders data from db,in myaccounts page i made change such that if user is not logged in ,then he will logged out ,similarly for homw page if user not logged in ,he will redirected to login page    
+
+//to use environmental variables in next js the variable should be prefixed with NEXT_PUBLIC_VariableName
+// .env -> NEXT_PUBLIC_HOST='host value'
+//iam using environmental variable to replace HOSt which localhostL3000 , jwt_secret_key,mongo_uri
+
+//in checkout page ,disabling pay buttom until all other fields are full,populating state and city just by entering pincode,changed userId with email in order modal,added orderId,
+//readOnly={true} for input tag makes it only readable not editable,disabled={true} makes button disabled,
+//creating order request in backend to create order,creating random id using "Date.now()"

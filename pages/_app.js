@@ -150,7 +150,7 @@ export default function App({ Component, pageProps }) {
         waitingTime={400}
         onLoaderFinished={() => setProgress(0)}
       />
-    <Navbar addToCart={addToCart} key={key} user={user} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />
+    <Navbar addToCart={addToCart} user={user} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} />
     <Component   {...pageProps} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} cart={cart} buyNow={buyNow} />;
     <ToastContainer />
     <Footer />

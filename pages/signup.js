@@ -20,7 +20,7 @@ const Signup = () => {
     try {
       e.preventDefault()
       console.log("user data", userInfo)
-      const Data = await axios.post("http://localhost:3000/api/signup",userInfo)
+      const Data = await axios.post(`${process.env.NEXT_PUBLIC_HOST}/api/signup`,userInfo)
       const response = Data.data
       // console.log('response', response)
       if (response.success) {
