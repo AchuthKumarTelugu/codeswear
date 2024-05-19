@@ -71,7 +71,7 @@
 
 //replaced dummy text in hoodies,mugs,stickers from data in mongodb ,similarly like tshirts
 
-//made backend for login and signup:creating user on database and verifying user,encryption password while storing
+//made backend for login and signup:creating user on database and verifying user,encryption password while storing,password is 'password' for" pervysage_123@gmail.com" and "uchiha_sharingan@gmail.com"
 
 //added jwt token using npm i jsonwebtoken and jwt=jsonwebtoken.sign({data},secret_key,{expiresIn:"2h"}),upon login success ,i will send token to user ,where he will store it in localstorage,by checking localstorage for token we can verify that he is registered user
 //generally jwt contains header:which tells about type of algoirithim,payload:which contains our data,secret key:a secret key which is used access and change jwt token,if user has jwt token he will allowed to home page else he will be redirected to login page
@@ -98,4 +98,8 @@
 
 //in checkout page ,disabling pay buttom until all other fields are full,populating state and city just by entering pincode,changed userId with email in order modal,added orderId,
 //readOnly={true} for input tag makes it only readable not editable,disabled={true} makes button disabled,
-//creating order request in backend to create order,creating random id using "Date.now()"
+//creating order request in backend to create order,creating random id using "Date.now()",on clicking pay button,order will be created
+
+//so i created order confirmation page which shows all the products ordered,by getting orderid by which mongodb stores data,this orderId will be taken by query from url when user enteres,by that id we fetch from mongodb and display them
+//made myOrder api request which extract user info using jwt token using jwt.verify(token,secretKey,(err,decode)=>{}),using which we can get users email to fetch orders from mongodb
+//made my order page which will display all orders on given email,onclicking details it will redirect to that order using id,in my orders all orders made on same email,on clicking that order it will show items in that order in another page

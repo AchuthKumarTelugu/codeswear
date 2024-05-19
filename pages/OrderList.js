@@ -1,6 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Orders from '@/modals/Orders';
+import { Router, useRouter } from 'next/router';
+import mongoose from 'mongoose';
+import Link from 'next/link';
+
 const OrderList = () => {
+  const router = useRouter();
+  const [userOrders, setUserOrders] = useState([])
+  useEffect(() => {
+    try {
+      if (localStorage.getItem('token')) {
+        let token = localStorage.getItem('token')
+        console.log('token',token)
+        fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myOrders`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ token: token })
+        }).then(value => value.json()).then(response => {
+          // console.log(response)
+          setUserOrders(response)
+          // console.log("response",response)
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+
+  }, [])
+  useEffect(()=>{
+    if(userOrders!=[]) {
+      console.log('userOrders',userOrders)
+    }
+  },[userOrders])
   return (
     <div>
       <div className="w-3/4 mx-auto  ">
@@ -11,55 +44,36 @@ const OrderList = () => {
               <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3">
-                    Orders name
+                    Orders Id
                   </th>
                   <th scope="col" className="px-6 py-3">
-                    Color
+                    Email
                   </th>
+                    
                   <th scope="col" className="px-6 py-3">
-                    Category
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Price
+                    details
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    Apple MacBook Pro 17"
-                  </th>
-                  <td className="px-6 py-4">Silver</td>
-                  <td className="px-6 py-4">Laptop</td>
-                  <td className="px-6 py-4">$2999</td>
-                </tr>
-                <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    Microsoft Surface Pro
-                  </th>
-                  <td className="px-6 py-4">White</td>
-                  <td className="px-6 py-4">Laptop PC</td>
-                  <td className="px-6 py-4">$1999</td>
-                </tr>
-                <tr className="bg-white dark:bg-gray-800">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    Magic Mouse 2
-                  </th>
-                  <td className="px-6 py-4">Black</td>
-                  <td className="px-6 py-4">Accessories</td>
-                  <td className="px-6 py-4">$99</td>
-                </tr>
-              </tbody>
+              
+              {
+                userOrders  && <tbody>
+                  {
+                    userOrders.map((value, index) => { return <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th
+                      scope="row"
+                      className="px-6 py-4  font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {value.orderId}
+                    </th>
+                    <td className="px-6 py-4 ">{value.email}</td>
+                    <td className="px-6 py-4 text-blue-400 font-semibold hover:underline hover:text-blue-700 cursor-pointer" onClick={()=>router.push(`/order?id=${value._id}`)}><Link href={`/order?id=${value._id}`}></Link>Click here</td>
+                  </tr> })
+                  }
+                </tbody>
+              }
             </table>
+             
           </div>
 
 
@@ -69,28 +83,6 @@ const OrderList = () => {
     </div>
   )
 }
-// export async function getServerSideProps(context) {
-    // try {
-    //     if (!(mongoose.connections[0].readyState)) { //if there is already a connection,return handler with req,res
-    //         await mongoose.connect(process.env.MONGO_URI) 
-    //       }
-          
-    //     let orders=await Orders.find({}) 
-    //     orders=JSON.parse(JSON.stringify(orders))
-    //     if (!orders) {
-    //         return {
-    //           notFound: true, // Return a 404 page if the product is not found
-    //         };
-    //       }
-    //     return {
-    //         props:{orders},
-    //     }
-    // } catch (error) {
-    //     console.log("error occured while retreiving data")
-    //     return {
-    //         notFound:true
-    //     }
-    // }
-   
-// }
+
+
 export default OrderList

@@ -16,7 +16,7 @@ const Login = async (req, res) => {
         console.log("users", users)
         if (users) {
             if (await bcrypt.compare(password, users.password)) {
-                let token=jwt.sign({email:users.email,type:"user"},process.env.jwt_secret_key,{expiresIn:'2h'})//creating token
+                let token=jwt.sign({email:users.email,type:"user"},process.env.jwt_secret_key,{expiresIn:"6h"})//creating token
                 res.status(200).json({ success: true, msg: "user found",token:token })
             } else {
                 res.status(500).json({ success: false, msg: "Incorrect password" })
