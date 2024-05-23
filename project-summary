@@ -67,6 +67,7 @@
 //       </div>
 //     );
 //   }
+//note:if we want to ToastContainer in more than one page we have to give it containerId like <ToastContainer containerId={"a"}/> ,<ToastContainer containerId={"b"}/>
 //we gave toastify messages to addToCart,removeFromCart,clearCart,checkPincodeServicability
 
 //replaced dummy text in hoodies,mugs,stickers from data in mongodb ,similarly like tshirts
@@ -103,3 +104,29 @@
 //so i created order confirmation page which shows all the products ordered,by getting orderid by which mongodb stores data,this orderId will be taken by query from url when user enteres,by that id we fetch from mongodb and display them
 //made myOrder api request which extract user info using jwt token using jwt.verify(token,secretKey,(err,decode)=>{}),using which we can get users email to fetch orders from mongodb
 //made my order page which will display all orders on given email,onclicking details it will redirect to that order using id,in my orders all orders made on same email,on clicking that order it will show items in that order in another page
+
+//made functionality be getting state and city data using pincode entered,i used url,which postoffice url to get location details from pincode,what we cant directly access it from front end due to cors policy,so we have to make backend request 
+//how to make cors ,first make a middle ware,npm i cors,
+// import Cors from cors
+//let cors=Cors({methods:["GET","POST","HEAD"],origin:"*"})
+// function runMiddleware(req,res,fn)=>{
+//     return new Promise((resolve,reject)=>{
+//         fn(req,res,(result)=>{
+//             if(result instanceof Error) {
+//                 return reject(result)
+//             }
+//             return resolve(result)
+//         })
+//     })
+// }
+// export default cors
+// export {runMiddleware}
+
+// in api request
+// import cors from '...'
+// import runMiddleware from '...'
+// await runMiddleware(req,res,cors)
+//using this request ,we can get state and city details and populate them in state,city using useREf and useeffect with dependency of checkoutInfo.pincode ,view checkout.js for implementation
+
+//suppose if someone tampered with localstorage with duplicate data,then it will hectic issue,i made checkTampering api req to check data in localstorage with data in mongodb,on clicking pay Button,we will check possibility of tampering,if it happens we will not proceed with order
+//suppose if some product went out of stock,we cant let user order it,i made a backend request that checks qty of cart to avaialableQty ,if qty in db is less than cart then we wont let user order it,which is done after user clicked pay button
