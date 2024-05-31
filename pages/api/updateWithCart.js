@@ -8,8 +8,7 @@ const handler=async(req,res)=>{
   
   for(let key of Object.keys(cart)) {
     let item=cart[key]
-    let product=await Product.updateOne({slug:key},{$inc:{availableQty:-1}})
-   
+    let product=await Product.updateOne({slug:key},{$inc:{availableQty:-(item.qty)}})
   }
   return res.status(200).json({"success":true,msg:"updating cart items with db done"})
 }

@@ -23,7 +23,7 @@ const Checkout = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
     // console.log(checkoutInfo)
     setCheckoutInfo({ ...checkoutInfo, [e.currentTarget.name]: e.currentTarget.value })
     const { name, email, address, City, phone, state, pincode } = checkoutInfo
-    if (name.length > 3 && email.length > 3 && address.length > 3 && pincode.length > 3 && phone.length > 3) {
+    if (name.length > 3 && address.length > 3 && pincode.length > 3 && phone.length > 3) {
       console.log('entered the loop');
       // console.log(checkoutInfo)
       setDisabled(false)
@@ -74,6 +74,21 @@ const Checkout = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
     } catch (error) {
       console.log(error)
       return
+    }
+    //checking phone number 
+    if(checkoutInfo.phone.length < 10) {
+      toast.error('Enter valid 10-digit phone number!', {
+        position: "top-left",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      return;
     }
     //checking tampering
     try {
@@ -190,6 +205,35 @@ const Checkout = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
       });
 
     }).catch(err => { console.log(err) })
+
+    //reducing orderItems in database 
+    try {
+      let updateResponse = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateWithCart`,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({cart:JSON.parse(localStorage.getItem("cart"))})
+      })
+      let updateData=await updateResponse.json()
+      if(updateData.success) {
+        let msg=updateData.msg
+        toast.success(msg, {
+          position: "top-left",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }
+     
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
@@ -208,7 +252,7 @@ const Checkout = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
           <div className="p-2 w-1/2">
             <div className="relative">
               <label htmlFor="email" className="leading-7 text-sm text-gray-600">Email</label>
-              <input value={checkoutInfo.email} onChange={(e) => handleChange(e)} type="email" id="email" name="email" className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+              <input value={localStorage.getItem('email') || ""} type="email" id="email" name="email" readOnly={true} className="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-pink-500 focus:bg-white focus:ring-2 focus:ring-pink-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
             </div>
           </div>
           <div className="p-2 w-full">

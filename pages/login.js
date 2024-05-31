@@ -22,6 +22,7 @@ const Login = () => {
         if (value.data.success) {
           alert('user detected')
           localStorage.setItem('token',(value.data.token))//setting token in local storage
+          localStorage.setItem('email',userInfo.email)
           router.push('/')
         } 
         setUserInfo({

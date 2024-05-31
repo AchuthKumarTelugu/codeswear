@@ -19,7 +19,7 @@ const OrderList = () => {
           },
           body: JSON.stringify({ token: token })
         }).then(value => value.json()).then(response => {
-          // console.log(response)
+          console.log(response)
           setUserOrders(response)
           // console.log("response",response)
         })

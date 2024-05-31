@@ -130,3 +130,7 @@
 
 //suppose if someone tampered with localstorage with duplicate data,then it will hectic issue,i made checkTampering api req to check data in localstorage with data in mongodb,on clicking pay Button,we will check possibility of tampering,if it happens we will not proceed with order
 //suppose if some product went out of stock,we cant let user order it,i made a backend request that checks qty of cart to avaialableQty ,if qty in db is less than cart then we wont let user order it,which is done after user clicked pay button
+//made updateWithCart .js for reducing cart quantity when order has placed,because of order quantity will reduce
+//made email in checkout fixed with email you enter with login
+
+//made checkout and clear cart button as disabled if cart is empty
