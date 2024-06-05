@@ -58,7 +58,21 @@ const Checkout = ({ addToCart, removeFromCart, clearCart, subTotal, cart }) => {
             toast.error("Invalid pincode. Please check and enter again.");
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+          console.log(err)
+          toast.error('the pincode you entered is not servicable!', {
+            position: "top-left",
+            autoClose: 1000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            transition: Bounce,
+          });
+        });
+
     }
   }, [checkoutInfo.pincode]);
   const handlePay = async () => {
